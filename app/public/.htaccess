@@ -1,0 +1,7 @@
+Options FollowSymLinks
+Options -Indexes
+
+RewriteEngine On
+RewriteRule ^data.json$ data.php [L,QSA]
+
+RewriteRule ^(code|style)(_[a-zA-Z0-9]{1,16})?\.(js|css)$ $1.$3 [L,QSA] # Useful for cache busting
