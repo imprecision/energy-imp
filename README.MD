@@ -20,7 +20,7 @@ Then edit your config file accordingly `app/private/config.php`:
 * `MAX_GEN_CAPACITY_W` - The value in Watts that your system can generate at maximum, e.g. set to `10000` if your system can generate up to 10kW.
 * `MODEL` - The model name of your inverter (this must match a supported model).
 * `IP` - The IP address of your inverter, e.g. usually a local network address in the format of "192.168.0.123".
-* `UPDATE_FREQUENCY_S` - The frequenecy in seconds the browser will poll for updates (default 5s).
+* `UPDATE_FREQUENCY_S` - The frequency in seconds the browser will poll for updates (default 5s).
 
 ## Use
 
@@ -48,7 +48,7 @@ If you want to change the port number update `docker-compose.yml` and restart th
 
 ## Examples
 
-I run it as a fullscreen webapp on an old iPad for an always on display in my ktichen...
+I run it as a fullscreen webapp on an old iPad for an always on display in my kitchen...
 
 (Using [Apple Configurator](https://support.apple.com/apple-configurator) and a custom profile with a [Web Clip](https://developer.apple.com/documentation/devicemanagement/webclip) URL set to the server's address as a simple way to get an icon on the dock and fullscreen when active.)
 
