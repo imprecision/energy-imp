@@ -3,10 +3,10 @@ version: "3.7"
 services:
   energy-imp:
     container_name: energy-imp
-    build: './php/'
+    build: './app/php/'
     ports:
       - "8123:80"
     restart: always
     volumes:
-      - ./public/:/var/www/html/
-      - ./private/:/var/www/private/
+      - ./app/public/:/var/www/html/
+      - ./app/private/:/var/www/private/
