@@ -6,17 +6,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="Realtime Energy Statistics">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
     <title>Energy</title>
+
     <link href="ext/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="ext/materialdesignicons/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-    <link href="style_v2301291500.css" rel="stylesheet" type="text/css">
+    <link href="style_v2403201500.css" rel="stylesheet" type="text/css">
+
     <link rel="shortcut icon" href="/sunicon.png">
+    <link rel="apple-touch-icon" href="/sunicon.png">
     <link rel="manifest" href="/home.webmanifest">
 </head>
 
 <body>
-    <div class="mx-3 overflow-hidden">
-        <div class="mt-3 d-none problem-loading">
+    <div class="overflow-hidden">
+        <div class="mt-2 d-none problem-loading">
             <div class="chart-bar chart-bar-red-line">
                 <div class="chart-bar chart-bar-red-bg problem-loading-msg">Problem Loading Data</div>
             </div>
@@ -24,7 +30,7 @@
                 Trying again...
             </div>
         </div>
-        <div class="mt-3 ok-loading">
+        <div class="mt-2 ok-loading">
             <div class="chart-bar chart-bar-orange-line">
                 <div class="chart-bar chart-bar-orange-bg pc_current_made">Solar Generation</div>
             </div>
@@ -32,10 +38,10 @@
                 <div class="col-2 text-center"><i class="mdi mdi-solar-power-variant"></i></div>
                 <div class="col-2"><span id="sparkline-made" class="spark-style"></span></div>
                 <div class="col-7 text-end text-monospace w_current_made">Loading...</div>
-                <div class="col-1 py-4">W</div>
+                <div class="col-1">W</div>
             </div>
         </div>
-        <div class="mt-1 ok-loading">
+        <div class="ok-loading">
             <div class="chart-bar chart-bar-blue-line">
                 <div class="chart-bar chart-bar-blue-bg pc_current_used">Using</div>
             </div>
@@ -43,10 +49,10 @@
                 <div class="col-2 text-center"><i class="mdi mdi-home-lightning-bolt"></i></div>
                 <div class="col-2"><span id="sparkline-used" class="spark-style"></span></div>
                 <div class="col-7 text-end text-monospace w_current_used">Loading...</div>
-                <div class="col-1 py-4">W</div>
+                <div class="col-1">W</div>
             </div>
         </div>
-        <div class="mt-1 ok-loading">
+        <div class="ok-loading">
             <div class="chart-bar chart-bar-green-line w_current_grid_positive_A">
                 <div class="chart-bar chart-bar-green-bg pc_current_grid">Grid - Loading...</div>
             </div>
@@ -54,17 +60,17 @@
                 <div class="col-2 text-center w_current_grid_positive"><i class="mdi mdi-transmission-tower-import"></i></div>
                 <div class="col-2"><span id="sparkline-grid" class="spark-style"></span></div>
                 <div class="col-7 text-end text-monospace w_current_grid">Loading...</div>
-                <div class="col-1 py-4">W</div>
+                <div class="col-1">W</div>
             </div>
         </div>
-        <div class="mt-1 ok-loading">
+        <div class="ok-loading">
             <div class="chart-bar chart-bar-grey-line">
                 <div class="chart-bar chart-bar-grey-bg" style="width: 100%;">Solar Lifetime Generated</div>
             </div>
             <div class="text-secondary display-4 row">
                 <div class="col-2"><i class="mdi mdi-solar-power"></i></div>
                 <div class="col-9 text-end kwh_total_generated_ever">Loading...</div>
-                <div class="col-1 py-2">Wh</div>
+                <div class="col-1">Wh</div>
             </div>
         </div>
     </div>
