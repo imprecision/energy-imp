@@ -43,7 +43,9 @@ class FroniusSymoGen24100Plus
                 "w_current_made" => $data["site"]["P_PV"], // being generated
                 "w_current_grid" => $data["site"]["P_Grid"], // to grid (negative - being sent to grid, positive - being drawn from grid)
                 "w_current_used" => $data["site"]["P_Load"], // being used
+                "w_battery" => $data["site"]["P_Akku"], // being used
                 "w_max_factor" => MAX_GEN_CAPACITY_W, // factor to calc the bar charts percentages with - recommend value near real-world max generation capacity in watts
+                "w_max_factor_battery" => MAX_BAT_CAPACITY_W, 
                 "original" => $data, // not required but can be useful for debugging on client side
             ];
         } else {

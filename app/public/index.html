@@ -13,7 +13,7 @@
 
     <link href="ext/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="ext/materialdesignicons/css/materialdesignicons.min.css" rel="stylesheet" type="text/css">
-    <link href="style_v2403201500.css" rel="stylesheet" type="text/css">
+    <link href="style_v2412041935.css" rel="stylesheet" type="text/css">
 
     <link rel="shortcut icon" href="/sunicon.png">
     <link rel="apple-touch-icon" href="/sunicon.png">
@@ -30,6 +30,7 @@
                 Trying again...
             </div>
         </div>
+
         <div class="mt-2 ok-loading">
             <div class="chart-bar chart-bar-orange-line">
                 <div class="chart-bar chart-bar-orange-bg pc_current_made">Solar Generation</div>
@@ -41,6 +42,19 @@
                 <div class="col-1">W</div>
             </div>
         </div>
+
+        <div class="ok-loading">
+            <div class="chart-bar chart-bar-turq-line">
+                <div class="chart-bar chart-bar-turq-bg pc_battery">Battery</div>
+            </div>
+            <div class="text-primary display-3 row">
+                <div class="col-2 text-center w_battery_positive"><i class="mdi mdi-battery-plus"></i></div>
+                <div class="col-2"><span id="sparkline-battery" class="spark-style"></span></div>
+                <div class="col-7 text-end text-monospace w_battery">Loading...</div>
+                <div class="col-1">W</div>
+            </div>
+        </div>
+
         <div class="ok-loading">
             <div class="chart-bar chart-bar-blue-line">
                 <div class="chart-bar chart-bar-blue-bg pc_current_used">Using</div>
@@ -52,6 +66,7 @@
                 <div class="col-1">W</div>
             </div>
         </div>
+
         <div class="ok-loading">
             <div class="chart-bar chart-bar-green-line w_current_grid_positive_A">
                 <div class="chart-bar chart-bar-green-bg pc_current_grid">Grid - Loading...</div>
@@ -63,6 +78,7 @@
                 <div class="col-1">W</div>
             </div>
         </div>
+
         <div class="ok-loading">
             <div class="chart-bar chart-bar-grey-line">
                 <div class="chart-bar chart-bar-grey-bg" style="width: 100%;">Solar Lifetime Generated</div>
@@ -76,7 +92,7 @@
     </div>
     <script src="ext/jquery-3.6.1.min.js" type="text/javascript"></script>
     <script src="ext/jquery.sparkline.min.js" type="text/javascript"></script>
-    <script src="code_v2301291500.js" type="text/javascript"></script>
+    <script src="code_v2412041935.js" type="text/javascript"></script>
 </body>
 
 </html>

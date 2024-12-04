@@ -24,9 +24,9 @@ body {
 }
 
 .display-3 {
-    font-size: 22vh;
+    font-size: 20vh;
     font-weight: bold;
-    line-height: 22vh;
+    line-height: 18vh;
 }
 
 .chart-bar {
@@ -63,6 +63,15 @@ body {
 
 .chart-bar-blue-bg {
     background-color: rgb(13, 202, 240);
+    padding-top: 0.4rem;
+}
+
+.chart-bar-turq-line {
+    border-color: rgb(13, 110, 253);
+}
+
+.chart-bar-turq-bg {
+    background-color: rgb(13, 110, 253);
     padding-top: 0.4rem;
 }
 

@@ -60,6 +60,7 @@ function load() {
             if (typeof data_orig.w_current_made !== "undefined") {
                 data.kwh_total_generated_ever = data_orig.kwh_total_generated_ever; // total ever
                 data.w_current_made = data_orig.w_current_made; // being generated
+                data.w_battery = data_orig.w_battery; // being generated
                 data.w_current_grid = data_orig.w_current_grid; // to grid (negative - being sent to grid, positive - being drawn from grid)
                 data.w_current_used = data_orig.w_current_used; // being used
                 data.w_max_factor = data_orig.w_max_factor; // factor to calc the bar charts percentages with - recommend value near real-world max generation capacity in watts
@@ -69,8 +70,11 @@ function load() {
                 data.w_current_used = data.w_current_used < 0 ? data.w_current_used * -1 : data.w_current_used;
 
                 data.pc_current_made = Math.round((data.w_current_made / data.w_max_factor) * 100);
+                data.pc_battery = Math.round((data.w_battery / data.w_max_factor_battery) * 100);
                 data.pc_current_grid = Math.round((data.w_current_grid / data.w_max_factor) * 100);
                 data.pc_current_used = Math.round((data.w_current_used / data.w_max_factor) * 100);
+
+                data.pc_battery = isNaN(data.pc_battery) ? 0 : data.pc_battery;
             } else if (typeof data_orig.error !== "undefined") {
                 data.error = data_orig.error;
             } else {
@@ -95,6 +99,22 @@ function load() {
                 );
                 histMade = smooth(histMade, data.w_current_made);
                 $("#sparkline-made").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(255, 193, 7)", barWidth: 2, barSpacing: 1 });
+
+                // w_battery
+                $(".pc_battery")
+                .animate({ width: data.pc_battery + "%" }, animSpeed_ms)
+                .css("overflow", "visible");
+                $(".w_battery").html(
+                    parseFloat(data.w_battery).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, thousandChar)
+                );
+                histMade = smooth(histMade, data.w_battery);
+                $("#sparkline-battery").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(13, 110, 253)", barWidth: 2, barSpacing: 1 });
+                // w_battery_positive
+                if (data.pc_battery >= 0) {
+                    $(".w_battery_positive").html('<i class="mdi mdi-battery-plus"></i>');
+                } else {
+                    $(".w_battery_positive").html('<i class="mdi mdi-battery-minus"></i>');
+                }
 
                 // Used - Being used
                 $(".pc_current_used")
