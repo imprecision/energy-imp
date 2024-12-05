@@ -15,7 +15,7 @@
  */
 
 define("MAX_GEN_CAPACITY_W", 8000);
-define("MAX_BAT_CAPACITY_W", 22000);
+define("MAX_BAT_CAPACITY_W", 5000);
 
 /**
  * Your inverter system configuration

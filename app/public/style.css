@@ -8,12 +8,13 @@ body {
 }
 
 .display-4 {
-    font-size: 8vh;
-    font-weight: bold;
-    letter-spacing: 0.5vh;
+  font-size: 3vh;
+  line-height: 3.5vh;
+  letter-spacing: 0.5vh;
+  font-weight: normal;
 }
 
-.display-4 div + div + div, .display-3 div + div + div + div {
+.display-3 div + div + div + div {
     font-weight: bold;
     font-size: 2.5vh;
     line-height: 5vh;
@@ -23,10 +24,19 @@ body {
     opacity: 0.6;
 }
 
-.display-3 {
-    font-size: 20vh;
+.display-4 div + div + div {
     font-weight: bold;
-    line-height: 18vh;
+    font-size: 2.5vh;
+    letter-spacing: normal;
+    text-align: start;
+    padding-right: 2vh;
+    opacity: 0.6;
+}
+
+.display-3 {
+    font-size: 21vh;
+    font-weight: bold;
+    line-height: 19vh;
 }
 
 .chart-bar {
@@ -37,6 +47,9 @@ body {
     background-color: transparent;
     border-top: 0;
     border-right: 0;
+    font-size: 1.75vh;
+    line-height: 1vh;
+    font-weight: normal;
 }
 
 .chart-bar-green-line {
@@ -97,19 +110,28 @@ body {
     position: relative;
     top: 4vw;
     opacity: 0.5;
+    padding-left: 1vw;
 }
 
-.kwh_total_generated_ever {
-    font-size: 9vh;
+.mdi {
+    padding-left: 1vw;
+    font-size: 18vh;
+    line-height: 20vh;
+}
+
+.mdi-solar-power {
+    font-size: 5vh;
+    line-height: 2vh;
+}
+
+.w_battery {
+    font-size: 10vh;
+    line-height: 10vh;
 }
 
 @media (max-width: 1000px) {
     .display-3 {
-        font-size: 18vw;
-        line-height: 18vw;
-    }
-
-    .kwh_total_generated_ever {
-        font-size: 8vw;
+        font-size: 16vw;
+        line-height: 16vw;
     }
 }

@@ -56,6 +56,14 @@ class FroniusSymoGen24100Plus
                 "json" => $json,
             ];
         }
+
+        $url_template_battery = "http://%s/components/BatteryManagementSystem/readable";
+        $json_battery = file_get_contents(sprintf($url_template_battery, $this->config["IP"]));
+        $data_battery = json_decode($json_battery, true);
+        if (isset($data_battery["Body"]["Data"]["16580609"]["channels"]["BAT_VALUE_STATE_OF_CHARGE_RELATIVE_U16"])) {
+            $set["w_battery_state_of_charge"] = $data_battery["Body"]["Data"]["16580609"]["channels"]["BAT_VALUE_STATE_OF_CHARGE_RELATIVE_U16"];
+        }
+
         return $set;
     }
 }

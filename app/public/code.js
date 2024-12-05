@@ -5,8 +5,9 @@
  */
 
 const UPDATE_URL = "/data.json";
-
-let UPDATE_FREQ_S = 5;
+const THOUSAND_CHAR = "";
+const ANIMSPEED_MS = 1000;
+const UPDATE_FREQ_S = 5;
 
 let histMade = [];
 let histUsed = [];
@@ -46,16 +47,14 @@ function smooth(data, item, back = 2) {
     return finalData;
 }
 
+function stdNum(num) {
+    return parseFloat(num).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, THOUSAND_CHAR);
+}
+
 function load() {
-    let thousandChar = "";
-    let animSpeed_ms = 1000;
     $.post(UPDATE_URL)
         .done(function (data_orig) {
             const data = {};
-
-            if (typeof data_orig.s_update_frequency !== "undefined") {
-                UPDATE_FREQ_S = data_orig.s_update_frequency;
-            }
 
             if (typeof data_orig.w_current_made !== "undefined") {
                 data.kwh_total_generated_ever = data_orig.kwh_total_generated_ever; // total ever
@@ -64,6 +63,8 @@ function load() {
                 data.w_current_grid = data_orig.w_current_grid; // to grid (negative - being sent to grid, positive - being drawn from grid)
                 data.w_current_used = data_orig.w_current_used; // being used
                 data.w_max_factor = data_orig.w_max_factor; // factor to calc the bar charts percentages with - recommend value near real-world max generation capacity in watts
+                data.w_max_factor_battery = data_orig.w_max_factor_battery;
+                data.w_battery_state_of_charge = data_orig.w_battery_state_of_charge;
 
                 data.w_current_grid_positive = data.w_current_grid > 0;
                 data.w_current_grid = data.w_current_grid < 0 ? data.w_current_grid * -1 : data.w_current_grid;
@@ -73,8 +74,6 @@ function load() {
                 data.pc_battery = Math.round((data.w_battery / data.w_max_factor_battery) * 100);
                 data.pc_current_grid = Math.round((data.w_current_grid / data.w_max_factor) * 100);
                 data.pc_current_used = Math.round((data.w_current_used / data.w_max_factor) * 100);
-
-                data.pc_battery = isNaN(data.pc_battery) ? 0 : data.pc_battery;
             } else if (typeof data_orig.error !== "undefined") {
                 data.error = data_orig.error;
             } else {
@@ -92,46 +91,48 @@ function load() {
 
                 // Made - Solar generation
                 $(".pc_current_made")
-                    .animate({ width: data.pc_current_made + "%" }, animSpeed_ms)
+                    .animate({ width: data.pc_current_made + "%" }, ANIMSPEED_MS)
                     .css("overflow", "visible");
                 $(".w_current_made").html(
-                    parseFloat(data.w_current_made).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, thousandChar)
+                    stdNum(data.w_current_made)
                 );
                 histMade = smooth(histMade, data.w_current_made);
                 $("#sparkline-made").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(255, 193, 7)", barWidth: 2, barSpacing: 1 });
 
                 // w_battery
+                let batPos = data.w_battery < 0 ? data.w_battery * -1 : data.w_battery;
                 $(".pc_battery")
-                .animate({ width: data.pc_battery + "%" }, animSpeed_ms)
-                .css("overflow", "visible");
+                    .animate({ width: data.w_battery_state_of_charge + "%" }, ANIMSPEED_MS)
+                    .css("overflow", "visible");
                 $(".w_battery").html(
-                    parseFloat(data.w_battery).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, thousandChar)
+                    stdNum(batPos) + "<br>" + data.w_battery_state_of_charge + "%"
                 );
                 histMade = smooth(histMade, data.w_battery);
                 $("#sparkline-battery").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(13, 110, 253)", barWidth: 2, barSpacing: 1 });
-                // w_battery_positive
-                if (data.pc_battery >= 0) {
+                if (data.pc_battery < 0) {
+                    $(".pc_battery").html("Battery (Charging)");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-plus"></i>');
                 } else {
+                    $(".pc_battery").html("Battery (Using)");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-minus"></i>');
                 }
 
                 // Used - Being used
                 $(".pc_current_used")
-                    .animate({ width: data.pc_current_used + "%" }, animSpeed_ms)
+                    .animate({ width: data.pc_current_used + "%" }, ANIMSPEED_MS)
                     .css("overflow", "visible");
                 $(".w_current_used").html(
-                    parseFloat(data.w_current_used).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, thousandChar)
+                    stdNum(data.w_current_used)
                 );
                 histUsed = smooth(histUsed, data.w_current_used);
                 $("#sparkline-used").sparkline(histUsed, { type: "bar", height: "8vw", barColor: "rgb(13, 202, 240)", barWidth: 2, barSpacing: 1 });
 
                 // Grid - Recieve to / send from grid
                 $(".pc_current_grid")
-                    .animate({ width: data.pc_current_grid + "%" }, animSpeed_ms)
+                    .animate({ width: data.pc_current_grid + "%" }, ANIMSPEED_MS)
                     .css("overflow", "visible");
                 $(".w_current_grid").html(
-                    parseFloat(data.w_current_grid).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, thousandChar)
+                    stdNum(data.w_current_grid)
                 );
                 $(".pc_current_grid").removeClass("chart-bar-green-bg chart-bar-red-bg");
                 $(".w_current_grid_positive_A").removeClass("chart-bar-green-line chart-bar-red-line");
@@ -140,7 +141,7 @@ function load() {
                     $(".pc_current_grid").addClass("chart-bar-red-bg");
                     $(".w_current_grid_positive_A").addClass("chart-bar-red-line");
                     $(".w_current_grid_positive_B").addClass("text-danger");
-                    $(".pc_current_grid").html("Receiving (Insufficiency)");
+                    $(".pc_current_grid").html("Grid - Using (Insufficiency)");
                     $(".w_current_grid_positive").html('<i class="mdi mdi-transmission-tower-export" title="Taking from grid (not enough self-generated)"></i>');
                 } else {
                     $(".pc_current_grid").addClass("chart-bar-green-bg");
@@ -154,7 +155,7 @@ function load() {
 
                 // Lifetime generation
                 $(".kwh_total_generated_ever").html(
-                    parseFloat(data.kwh_total_generated_ever).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, " ")
+                    stdNum(data.kwh_total_generated_ever)
                 );
             }
         })

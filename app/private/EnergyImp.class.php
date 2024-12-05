@@ -66,7 +66,6 @@ class EnergyImp
             [
                 "ts" => time(),
                 "model" => INVERTER_SYSTEM["MODEL"],
-                "s_update_frequency" => UPDATE_FREQUENCY_S,
             ],
             $this->inverter->getData(),
         );
