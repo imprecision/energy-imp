@@ -105,15 +105,16 @@ function load() {
                     .animate({ width: data.w_battery_state_of_charge + "%" }, ANIMSPEED_MS)
                     .css("overflow", "visible");
                 $(".w_battery").html(
-                    stdNum(batPos) + "<br>" + data.w_battery_state_of_charge + "%"
+                    "<div>" + stdNum(batPos) + "<em>W</em></div>" + 
+                    data.w_battery_state_of_charge
                 );
                 histMade = smooth(histMade, data.w_battery);
-                $("#sparkline-battery").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(13, 110, 253)", barWidth: 2, barSpacing: 1 });
+                $("#sparkline-battery").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(253, 103, 13)", barWidth: 2, barSpacing: 1 });
                 if (data.pc_battery < 0) {
-                    $(".pc_battery").html("Battery (Charging)");
+                    $(".pc_battery").html("Battery - Charging");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-plus"></i>');
                 } else {
-                    $(".pc_battery").html("Battery (Using)");
+                    $(".pc_battery").html("Battery - Using");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-minus"></i>');
                 }
 

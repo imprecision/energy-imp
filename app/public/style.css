@@ -49,7 +49,7 @@ body {
     border-right: 0;
     font-size: 1.75vh;
     line-height: 1vh;
-    font-weight: normal;
+    font-weight: bold;
 }
 
 .chart-bar-green-line {
@@ -80,11 +80,11 @@ body {
 }
 
 .chart-bar-turq-line {
-    border-color: rgb(13, 110, 253);
+    border-color: rgb(253, 103, 13);
 }
 
 .chart-bar-turq-bg {
-    background-color: rgb(13, 110, 253);
+    background-color: rgb(253, 103, 13);
     padding-top: 0.4rem;
 }
 
@@ -111,6 +111,7 @@ body {
     top: 4vw;
     opacity: 0.5;
     padding-left: 1vw;
+    z-index: -1;
 }
 
 .mdi {
@@ -124,9 +125,21 @@ body {
     line-height: 2vh;
 }
 
-.w_battery {
-    font-size: 10vh;
-    line-height: 10vh;
+.w_battery div {
+    display: inline-block;
+    font-size: 4vh;
+    line-height: 4vh;
+    margin-right: 1vh;
+}
+.w_battery div em {
+    
+    font-style: normal;
+    opacity: 0.6;
+    font-size: 2vh;
+}
+
+.text-primary {
+    color: rgb(253, 103, 13) !important;
 }
 
 @media (max-width: 1000px) {
