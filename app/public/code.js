@@ -12,6 +12,7 @@ const UPDATE_FREQ_S = 5;
 let histMade = [];
 let histUsed = [];
 let histGrid = [];
+let histBatt = [];
 
 /**
  * smooth
@@ -108,13 +109,13 @@ function load() {
                     "<div>" + stdNum(batPos) + "<em>W</em></div>" + 
                     data.w_battery_state_of_charge
                 );
-                histMade = smooth(histMade, data.w_battery);
-                $("#sparkline-battery").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(253, 103, 13)", barWidth: 2, barSpacing: 1 });
+                histBatt = smooth(histBatt, batPos);
+                $("#sparkline-battery").sparkline(histBatt, { type: "bar", height: "8vw", barColor: "rgb(253, 103, 13)", barWidth: 2, barSpacing: 1 });
                 if (data.pc_battery < 0) {
-                    $(".pc_battery").html("Battery - Charging");
+                    $(".pc_battery").html("Battery Charging");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-plus"></i>');
                 } else {
-                    $(".pc_battery").html("Battery - Using");
+                    $(".pc_battery").html("Battery Using");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-minus"></i>');
                 }
 
@@ -142,13 +143,13 @@ function load() {
                     $(".pc_current_grid").addClass("chart-bar-red-bg");
                     $(".w_current_grid_positive_A").addClass("chart-bar-red-line");
                     $(".w_current_grid_positive_B").addClass("text-danger");
-                    $(".pc_current_grid").html("Grid - Using (Insufficiency)");
+                    $(".pc_current_grid").html("Grid Using (Insufficiency)");
                     $(".w_current_grid_positive").html('<i class="mdi mdi-transmission-tower-export" title="Taking from grid (not enough self-generated)"></i>');
                 } else {
                     $(".pc_current_grid").addClass("chart-bar-green-bg");
                     $(".w_current_grid_positive_A").addClass("chart-bar-green-line");
                     $(".w_current_grid_positive_B").addClass("text-success");
-                    $(".pc_current_grid").html("Grid - Sending (Surplus)");
+                    $(".pc_current_grid").html("Grid Sending (Surplus)");
                     $(".w_current_grid_positive").html('<i class="mdi mdi-transmission-tower-import" title="Sending to grid (surplus)"></i>');
                 }
                 histGrid = smooth(histGrid, data.w_current_grid_positive ? parseFloat(data.w_current_grid) * -1 : parseFloat(data.w_current_grid));
