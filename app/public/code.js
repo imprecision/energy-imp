@@ -8,6 +8,7 @@ const UPDATE_URL = "/data.json";
 const THOUSAND_CHAR = "";
 const ANIMSPEED_MS = 1000;
 const UPDATE_FREQ_S = 5;
+const DECIMAL_PLACES = 0;
 
 let histMade = [];
 let histUsed = [];
@@ -49,7 +50,7 @@ function smooth(data, item, back = 2) {
 }
 
 function stdNum(num) {
-    return parseFloat(num).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, THOUSAND_CHAR);
+    return parseFloat(num).toLocaleString("en-GB", { minimumFractionDigits: DECIMAL_PLACES, maximumFractionDigits: DECIMAL_PLACES }).replace(/,/g, THOUSAND_CHAR);
 }
 
 function load() {
@@ -101,22 +102,29 @@ function load() {
                 $("#sparkline-made").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(255, 193, 7)", barWidth: 2, barSpacing: 1 });
 
                 // w_battery
+                let batSym = "";
+                if (data.w_battery < 0) {
+                    batSym = "+";
+                } else if (data.w_battery > 0) {
+                    batSym = "-";
+                }
                 let batPos = data.w_battery < 0 ? data.w_battery * -1 : data.w_battery;
+                let batTxt = batPos == 0 ? "" : '<div class="' + (batSym == "+" ? 'text-success' : 'text-danger') + '">' + batSym + "" + stdNum(batPos) + "<em>W</em></div>" + data.w_battery_state_of_charge;
                 $(".pc_battery")
                     .animate({ width: data.w_battery_state_of_charge + "%" }, ANIMSPEED_MS)
                     .css("overflow", "visible");
-                $(".w_battery").html(
-                    "<div>" + stdNum(batPos) + "<em>W</em></div>" + 
-                    data.w_battery_state_of_charge
-                );
-                histBatt = smooth(histBatt, batPos);
+                $(".w_battery").html(batTxt);
+                histBatt = smooth(histBatt, (data.w_battery * -1));
                 $("#sparkline-battery").sparkline(histBatt, { type: "bar", height: "8vw", barColor: "rgb(253, 103, 13)", barWidth: 2, barSpacing: 1 });
-                if (data.pc_battery < 0) {
+                if (batSym == "+") {
                     $(".pc_battery").html("Battery Charging");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-plus"></i>');
-                } else {
+                } else if (batSym == "-") {
                     $(".pc_battery").html("Battery Using");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-minus"></i>');
+                } else {
+                    $(".pc_battery").html("Battery");
+                    $(".w_battery_positive").html('<i class="mdi mdi-battery"></i>');
                 }
 
                 // Used - Being used

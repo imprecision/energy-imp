@@ -21,7 +21,7 @@ body {
     letter-spacing: normal;
     text-align: start;
     padding-right: 2vh;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .display-4 div + div + div {
@@ -30,7 +30,7 @@ body {
     letter-spacing: normal;
     text-align: start;
     padding-right: 2vh;
-    opacity: 0.6;
+    opacity: 0.8;
 }
 
 .display-3 {
@@ -126,15 +126,14 @@ body {
 }
 
 .w_battery div {
-    display: inline-block;
-    font-size: 4vh;
-    line-height: 4vh;
-    margin-right: 1vh;
+    display: inline;
+    font-size: 9vh;
+    line-height: 9vh;
+    margin-right: 2vh;
+    white-space: nowrap;
 }
 .w_battery div em {
-    
     font-style: normal;
-    opacity: 0.6;
     font-size: 2vh;
 }
 
