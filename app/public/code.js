@@ -109,7 +109,8 @@ function load() {
                     batSym = "-";
                 }
                 let batPos = data.w_battery < 0 ? data.w_battery * -1 : data.w_battery;
-                let batTxt = batPos == 0 ? "" : '<div class="' + (batSym == "+" ? 'text-success' : 'text-danger') + '">' + batSym + "" + stdNum(batPos) + "<em>W</em></div>" + data.w_battery_state_of_charge;
+                let batTxt = batPos == 0 ? "" : '<div class="' + (batSym == "+" ? 'text-success' : 'text-danger') + '">' + batSym + "" + stdNum(batPos) + "<em>W</em></div>"
+                batTxt += data.w_battery_state_of_charge;
                 $(".pc_battery")
                     .animate({ width: data.w_battery_state_of_charge + "%" }, ANIMSPEED_MS)
                     .css("overflow", "visible");
