@@ -169,6 +169,15 @@ function load() {
                     stdNum(data.kwh_total_generated_ever)
                 );
             }
+
+            // Dim display if late
+            let d = new Date();
+            let n = d.getHours();
+            if (n >= 23 || n < 6) {
+                document.body.style.opacity = 0.2;
+            } else {
+                document.body.style.opacity = 1;
+            }
         })
         .always(function () {
             setTimeout(load, UPDATE_FREQ_S * 1000);
@@ -176,3 +185,8 @@ function load() {
 }
 
 load();
+
+// If screen is clicked/tapped then ensure opacity is full
+document.addEventListener("click", function () {
+    document.body.style.opacity = "1";
+});
