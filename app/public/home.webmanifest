@@ -1,17 +1,17 @@
 {
-    "name": "Energy Imp",
-    "short_name": "Energy Imp",
-    "description": "Realtime Energy Statistics",
-    "scope": "/",
-    "start_url": "/",
-    "background_color": "#212529",
-    "theme_color": "#212529",
-    "display": "standalone",
-    "icons": [
-      {
-        "src": "/sunicon.png",
-        "type": "image/png",
-        "sizes": "500x500"
-      }
-    ]
-  }
+  "name": "Energy Imp",
+  "short_name": "Energy Imp",
+  "description": "Realtime Energy Statistics",
+  "scope": "/",
+  "start_url": "/",
+  "background_color": "#212529",
+  "theme_color": "#212529",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "/sunicon.png",
+      "type": "image/png",
+      "sizes": "500x500"
+    }
+  ]
+}

@@ -8,13 +8,13 @@ body {
 }
 
 .display-4 {
-  font-size: 3vh;
-  line-height: 3.5vh;
-  letter-spacing: 0.5vh;
-  font-weight: normal;
+    font-size: 3vh;
+    line-height: 3.5vh;
+    letter-spacing: 0.5vh;
+    font-weight: normal;
 }
 
-.display-3 div + div + div + div {
+.display-3 div+div+div+div {
     font-weight: bold;
     font-size: 2.5vh;
     line-height: 5vh;
@@ -24,7 +24,7 @@ body {
     opacity: 0.8;
 }
 
-.display-4 div + div + div {
+.display-4 div+div+div {
     font-weight: bold;
     font-size: 2.5vh;
     letter-spacing: normal;
@@ -132,6 +132,7 @@ body {
     margin-right: 2vh;
     white-space: nowrap;
 }
+
 .w_battery div em {
     font-style: normal;
     font-size: 2vh;
@@ -146,4 +147,10 @@ body {
         font-size: 16vw;
         line-height: 16vw;
     }
+}
+
+/* Prevent text selection */
+* {
+    user-select: none;
+    -webkit-user-select: none;
 }

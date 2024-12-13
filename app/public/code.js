@@ -186,7 +186,22 @@ function load() {
 
 load();
 
-// If screen is clicked/tapped then ensure opacity is full
 document.addEventListener("click", function () {
     document.body.style.opacity = "1";
+});
+
+document.body.addEventListener("dblclick", function () {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { // Safari/older Chrome
+            document.webkitExitFullscreen();
+        }
+    } else {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Safari/older Chrome
+            document.documentElement.webkitRequestFullscreen();
+        }
+    }
 });
