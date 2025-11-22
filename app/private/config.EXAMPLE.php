@@ -27,15 +27,7 @@ define("MAX_BAT_CAPACITY_W", 5000);
 define(
     "INVERTER_SYSTEM", [
         "MODEL" => "Fronius Symo GEN24 10.0 Plus", // Your inverter's model (currently only Fronius Symo supported, see EnergyImp::INVERTER_SYSTEMS_SUPPORTED)
-        "IP" => "192.168.0.123", // <--- SET THIS! To your inverter's IP address (i.e. the address it has on your local network)
+        "IP" => "192.168.0.123", // <--- IMPORTANT: Your inverter's IP address (i.e. the address it has on your local network)
+        "BATTERY_STORAGE_ID" => "", // <--- IMPORTANT: Your BYD battery system ID, e.g. 'BYD_Storage_12charhexid' (leave empty if no system present)
     ]
 );
-
-/**
- * The frequency at which the client will make a request to the server
- * for updated data, in seconds.
- * 
- * Default: 5s (recommended, you could go lower but be aware of the load on your inverter's "server")
- */
-
-define("UPDATE_FREQUENCY_S", 5);

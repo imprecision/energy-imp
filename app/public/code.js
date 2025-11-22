@@ -8,10 +8,12 @@ const UPDATE_URL = "/data.json";
 const THOUSAND_CHAR = "";
 const ANIMSPEED_MS = 1000;
 const UPDATE_FREQ_S = 5;
+const DECIMAL_PLACES = 0;
 
 let histMade = [];
 let histUsed = [];
 let histGrid = [];
+let histBatt = [];
 
 /**
  * smooth
@@ -48,7 +50,7 @@ function smooth(data, item, back = 2) {
 }
 
 function stdNum(num) {
-    return parseFloat(num).toLocaleString("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).replace(/,/g, THOUSAND_CHAR);
+    return parseFloat(num).toLocaleString("en-GB", { minimumFractionDigits: DECIMAL_PLACES, maximumFractionDigits: DECIMAL_PLACES }).replace(/,/g, THOUSAND_CHAR);
 }
 
 function load() {
@@ -100,21 +102,30 @@ function load() {
                 $("#sparkline-made").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(255, 193, 7)", barWidth: 2, barSpacing: 1 });
 
                 // w_battery
+                let batSym = "";
+                if (data.w_battery < 0) {
+                    batSym = "+";
+                } else if (data.w_battery > 0) {
+                    batSym = "-";
+                }
                 let batPos = data.w_battery < 0 ? data.w_battery * -1 : data.w_battery;
+                let batTxt = batPos == 0 ? "" : '<div class="' + (batSym == "+" ? 'text-success' : 'text-danger') + '">' + batSym + "" + stdNum(batPos) + "<em>W</em></div>"
+                batTxt += data.w_battery_state_of_charge;
                 $(".pc_battery")
                     .animate({ width: data.w_battery_state_of_charge + "%" }, ANIMSPEED_MS)
                     .css("overflow", "visible");
-                $(".w_battery").html(
-                    stdNum(batPos) + "<br>" + data.w_battery_state_of_charge + "%"
-                );
-                histMade = smooth(histMade, data.w_battery);
-                $("#sparkline-battery").sparkline(histMade, { type: "bar", height: "8vw", barColor: "rgb(13, 110, 253)", barWidth: 2, barSpacing: 1 });
-                if (data.pc_battery < 0) {
-                    $(".pc_battery").html("Battery (Charging)");
+                $(".w_battery").html(batTxt);
+                histBatt = smooth(histBatt, (data.w_battery * -1));
+                $("#sparkline-battery").sparkline(histBatt, { type: "bar", height: "8vw", barColor: "rgb(253, 103, 13)", barWidth: 2, barSpacing: 1 });
+                if (batSym == "+") {
+                    $(".pc_battery").html("Battery Charging");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-plus"></i>');
-                } else {
-                    $(".pc_battery").html("Battery (Using)");
+                } else if (batSym == "-") {
+                    $(".pc_battery").html("Battery Using");
                     $(".w_battery_positive").html('<i class="mdi mdi-battery-minus"></i>');
+                } else {
+                    $(".pc_battery").html("Battery");
+                    $(".w_battery_positive").html('<i class="mdi mdi-battery"></i>');
                 }
 
                 // Used - Being used
@@ -141,13 +152,13 @@ function load() {
                     $(".pc_current_grid").addClass("chart-bar-red-bg");
                     $(".w_current_grid_positive_A").addClass("chart-bar-red-line");
                     $(".w_current_grid_positive_B").addClass("text-danger");
-                    $(".pc_current_grid").html("Grid - Using (Insufficiency)");
+                    $(".pc_current_grid").html("Grid Using (Insufficiency)");
                     $(".w_current_grid_positive").html('<i class="mdi mdi-transmission-tower-export" title="Taking from grid (not enough self-generated)"></i>');
                 } else {
                     $(".pc_current_grid").addClass("chart-bar-green-bg");
                     $(".w_current_grid_positive_A").addClass("chart-bar-green-line");
                     $(".w_current_grid_positive_B").addClass("text-success");
-                    $(".pc_current_grid").html("Grid - Sending (Surplus)");
+                    $(".pc_current_grid").html("Grid Sending (Surplus)");
                     $(".w_current_grid_positive").html('<i class="mdi mdi-transmission-tower-import" title="Sending to grid (surplus)"></i>');
                 }
                 histGrid = smooth(histGrid, data.w_current_grid_positive ? parseFloat(data.w_current_grid) * -1 : parseFloat(data.w_current_grid));
@@ -158,6 +169,15 @@ function load() {
                     stdNum(data.kwh_total_generated_ever)
                 );
             }
+
+            // Dim display if late
+            let d = new Date();
+            let n = d.getHours();
+            if (n >= 23 || n < 6) {
+                document.body.style.opacity = 0.2;
+            } else {
+                document.body.style.opacity = 1;
+            }
         })
         .always(function () {
             setTimeout(load, UPDATE_FREQ_S * 1000);
@@ -165,3 +185,23 @@ function load() {
 }
 
 load();
+
+document.addEventListener("click", function () {
+    document.body.style.opacity = "1";
+});
+
+document.body.addEventListener("dblclick", function () {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.webkitExitFullscreen) { // Safari/older Chrome
+            document.webkitExitFullscreen();
+        }
+    } else {
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.webkitRequestFullscreen) { // Safari/older Chrome
+            document.documentElement.webkitRequestFullscreen();
+        }
+    }
+});

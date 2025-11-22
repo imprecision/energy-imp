@@ -34,7 +34,7 @@ class FroniusSymoGen24100Plus
      */
     public function getData(): array
     {
-        $url_template = "http://%s/status/powerflow";
+        $url_template = "http://%s/api/status/powerflow";
         $json = file_get_contents(sprintf($url_template, $this->config["IP"]));
         $data = json_decode($json, true);
         if (json_last_error() === JSON_ERROR_NONE) {
@@ -57,11 +57,13 @@ class FroniusSymoGen24100Plus
             ];
         }
 
-        $url_template_battery = "http://%s/components/BatteryManagementSystem/readable";
-        $json_battery = file_get_contents(sprintf($url_template_battery, $this->config["IP"]));
-        $data_battery = json_decode($json_battery, true);
-        if (isset($data_battery["Body"]["Data"]["16580609"]["channels"]["BAT_VALUE_STATE_OF_CHARGE_RELATIVE_U16"])) {
-            $set["w_battery_state_of_charge"] = $data_battery["Body"]["Data"]["16580609"]["channels"]["BAT_VALUE_STATE_OF_CHARGE_RELATIVE_U16"];
+        if (!empty($this->config["BATTERY_STORAGE_ID"])) {
+            $url_template_battery = "http://%s/api/components/BatteryManagementSystem/readable";
+            $json_battery = file_get_contents(sprintf($url_template_battery, $this->config["IP"]));
+            $data_battery = json_decode($json_battery, true);
+            if (isset($data_battery["Body"]["Data"][$this->config["BATTERY_STORAGE_ID"]]["channels"]["BAT_VALUE_STATE_OF_CHARGE_RELATIVE_F32"])) {
+                $set["w_battery_state_of_charge"] = round($data_battery["Body"]["Data"][$this->config["BATTERY_STORAGE_ID"]]["channels"]["BAT_VALUE_STATE_OF_CHARGE_RELATIVE_F32"], 1);
+            }
         }
 
         return $set;

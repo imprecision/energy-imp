@@ -20,7 +20,7 @@ Then edit your config file accordingly `app/private/config.php`:
 * `MAX_GEN_CAPACITY_W` - The value in Watts that your system can generate at maximum, e.g. set to `10000` if your system can generate up to 10kW.
 * `MODEL` - The model name of your inverter (this must match a supported model).
 * `IP` - The IP address of your inverter, e.g. usually a local network address in the format of "192.168.0.123".
-* `UPDATE_FREQUENCY_S` - The frequency in seconds the browser will poll for updates (default 5s).
+* `BATTERY_STORAGE_ID` - The battery system ID, e.g. 'BYD_Storage_12charhexid' (leave empty if no system present).
 
 ## Use
 
